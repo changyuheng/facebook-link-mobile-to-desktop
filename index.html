@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Facebook Link Mobile to Desktop</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="in" type="text" class="validate" autofocus>
+          <label for="in">https://m.facebook.com/...</label>
+        </div>
+      </div>
+      <div class="row">
+        <font size="5"><a id="out" class="left" href="https://www.facebook.com/">https://www.facebook.com/</a></font>
+        <button class="waves-effect waves-light btn right" data-clipboard-text="https://www.facebook.com/">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <!--  Scripts-->
+  <script src="js/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/clipboard.min.js"></script>
+  <script>
+new Clipboard('.btn');
+$("#in").on('input', function(e) {
+  // https://m.facebook.com/story.php?story_fbid=1006794756096118&id=120080344767568
+  // https://m.facebook.com/photo.php?fbid=10153894750504928&id=728309927&set=a.431553074927.224681.728309927&source=11
+  // https://m.facebook.com/groups/552138884819133?tsid=0.27010486781676346&source=typeahead
+  // https://m.facebook.com/profile.php?id=110970792260960
+  var input = $("#in").val();
+  var subPath = "";
+  var pattern = null;
+
+  pattern = /^.*story_fbid=([0-9]+).*$/;
+  if (!subPath && pattern.test(input)) {
+    subPath = pattern.exec(input)[1];
+  }
+  pattern = /^.*fbid=([0-9]+).*$/;
+  if (!subPath && pattern.test(input)) {
+    subPath = pattern.exec(input)[1];
+  }
+  pattern = /^.*[&?]id=([0-9]+).*$/;
+  if (!subPath && pattern.test(input)) {
+    subPath = pattern.exec(input)[1];
+  }
+  pattern = /^.*\/([0-9]+).*$/g;
+  if (!subPath && pattern.test(input)) {
+    try {
+      subPath = pattern.exec(input)[1];
+    } catch (err) {
+      pattern = /^.*\/([0-9]+).*$/;
+      subPath = pattern.exec(input)[1];
+    }
+  }
+
+  var output = "https://www.facebook.com/" + subPath;
+  $("#out").attr("href", output).text(output);
+  $(".btn").attr("data-clipboard-text", output);
+});
+  </script>
+
+  </body>
+</html>
