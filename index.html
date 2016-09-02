@@ -35,34 +35,44 @@
   <script>
 new Clipboard('.btn');
 $("#in").on('input', function(e) {
-  // https://m.facebook.com/story.php?story_fbid=1006794756096118&id=120080344767568
+  // https://m.facebook.com/story.php?story_fbid=10208681460625657&id=1585236139
   // https://m.facebook.com/photo.php?fbid=10153894750504928&id=728309927&set=a.431553074927.224681.728309927&source=11
   // https://m.facebook.com/groups/552138884819133?tsid=0.27010486781676346&source=typeahead
   // https://m.facebook.com/profile.php?id=110970792260960
+  // https://m.facebook.com/zuck?tsid=0.4166117413445398&source=typeahead
+  // https://m.facebook.com/zuck
   var input = $("#in").val();
   var subPath = "";
   var pattern = null;
 
-  pattern = /^.*story_fbid=([0-9]+).*$/;
+  pattern = /^.*story_fbid=([0-9][0-9]+).*$/;
   if (!subPath && pattern.test(input)) {
     subPath = pattern.exec(input)[1];
   }
-  pattern = /^.*fbid=([0-9]+).*$/;
+  pattern = /^.*fbid=([0-9][0-9]+).*$/;
   if (!subPath && pattern.test(input)) {
     subPath = pattern.exec(input)[1];
   }
-  pattern = /^.*[&?]id=([0-9]+).*$/;
+  pattern = /^.*[&?]id=([0-9][0-9]+).*$/;
   if (!subPath && pattern.test(input)) {
     subPath = pattern.exec(input)[1];
   }
-  pattern = /^.*\/([0-9]+).*$/g;
+  pattern = /^.*\/([0-9][0-9]+).*$/g;
   if (!subPath && pattern.test(input)) {
     try {
       subPath = pattern.exec(input)[1];
     } catch (err) {
-      pattern = /^.*\/([0-9]+).*$/;
+      pattern = /^.*\/([0-9][0-9]+).*$/;
       subPath = pattern.exec(input)[1];
     }
+  }
+  pattern = /^.*facebook\.com\/(.+)\?.*$/;
+  if (!subPath && pattern.test(input)) {
+    subPath = pattern.exec(input)[1];
+  }
+  pattern = /^.*facebook\.com\/(.*)$/;
+  if (!subPath && pattern.test(input)) {
+    subPath = pattern.exec(input)[1];
   }
 
   var output = "https://www.facebook.com/" + subPath;
