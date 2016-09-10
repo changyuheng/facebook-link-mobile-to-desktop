@@ -25,7 +25,7 @@
       </div>
       <div class="row">
         <font size="5"><a id="out" class="left" href="https://www.facebook.com/">https://www.facebook.com/</a></font>
-        <button class="waves-effect waves-light btn right blue darken-3" data-clipboard-text="https://www.facebook.com/">Copy</button>
+        <button id="copy" class="waves-effect waves-light btn right blue darken-3" data-clipboard-text="https://www.facebook.com/">Copy</button>
       </div>
     </div>
   </div>
@@ -37,6 +37,9 @@
   <script src="js/clipboard.min.js"></script>
   <script>
 new Clipboard('.btn');
+$("#copy").click(function() {
+  Materialize.toast("Copied!", 3000, "rounded");
+});
 $("#in").on('input', function(e) {
   // https://m.facebook.com/story.php?story_fbid=10208681460625657&id=1585236139
   // https://m.facebook.com/photo.php?fbid=10153894750504928&id=728309927&set=a.431553074927.224681.728309927&source=11
